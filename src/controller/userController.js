@@ -45,13 +45,17 @@ export const signup = async (req, res, next) => {
 };
 export const withdraw = (req, res, next) => {};
 
-export const me = (req, res, next) => {};
+export const me = async (req, res, next) => {
+  const id = req.userId;
+  const user = await userRepository.findById(id);
+  return res.status(200).json(user);
+};
 export const get = (req, res, next) => {};
 export const put = (req, res, next) => {};
 
 const createJwtToken = (id) => {
   const token = jwt.sign({ id: id }, config.jwt.secretKey, {
-    // expiresIn: config.jwt.expiresIn,
+    expiresIn: config.jwt.expiresIn,
   });
   return token;
 };

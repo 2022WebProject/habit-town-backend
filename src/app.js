@@ -6,9 +6,7 @@ import "express-async-errors";
 import { config } from "./helper/envconfig.js";
 import userRouter from "./router/userRouter.js";
 import questRouter from "./router/QuestRouter.js";
-import { connectDB, sqHelper } from "./helper/database.js";
-
-import "./helper/relation.js";
+import { connectDB } from "./helper/database.js";
 
 const app = express();
 
@@ -26,7 +24,3 @@ connectDB()
     app.listen(config.host.port);
   })
   .catch(console.error);
-
-// sqHelper.sync().then((client) => {
-
-// });
