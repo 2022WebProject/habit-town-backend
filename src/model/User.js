@@ -10,9 +10,13 @@ const UserSchema = mongoose.Schema({
   accepted_quests: [
     {
       quiest_id: { type: Number, required: true },
-      success_count: { type: Number, required: true },
       memo: { type: String, required: false },
-      status: { type: Number, required: true },
+      status: { type: Number, require: true },
+      sub_quests: [
+        {
+          title: { type: String, required: true },
+        },
+      ],
     },
   ],
 });

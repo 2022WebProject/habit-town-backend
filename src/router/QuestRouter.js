@@ -19,6 +19,6 @@ const questRouter = express.Router();
 questRouter.post("/", questValidate, authChecker, questController.create);
 questRouter.get("/", authChecker, questController.read);
 questRouter.get("/:id", authChecker, questController.readDetail);
-questRouter.post("/accept/:id", authChecker, questController.accept);
+questRouter.post("/accept", authChecker, questController.accept);
 
 export default questRouter;
