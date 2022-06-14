@@ -22,7 +22,10 @@ export const create = async (req, res, next) => {
 // TODO 여기 퀘스트 불러오기부분
 export const read = async (req, res, next) => {
   const quests = await questData.findAll();
-  res.status(200).json({ data: quests });
+  const retQuests = quests.filter(
+    (item) => !item.accepted_users.find((user) => user.user_id == req.userId)
+  );
+  res.status(200).json({ data: retQuests });
 };
 
 // TODO 여기 퀘스트 상세 불러오기 부분
@@ -48,6 +51,7 @@ export const accept = async (req, res, next) => {
     user.accepted_quests.find((user_quest_id) => user_quest_id.id === quest.id)
   ) {
     await userData.reject(req.userId, quest_id);
+    await questData.reject(req.userId, quest_id);
     return res.status(201).json({ message: "퀘스트를 그만뒀습니다." });
     // return res.status(400).json({ message: "이미 수락한 퀘스트입니다" });
   }
@@ -57,5 +61,6 @@ export const accept = async (req, res, next) => {
       .json({ message: "퀘스트는 3개까지 수락할 수 있습니다." });
   }
   await userData.accept(req.userId, quest_id, quest);
+  await questData.accept(req.userId, quest_id, quest);
   res.status(200).json({ message: "수락하였습니다." });
 };

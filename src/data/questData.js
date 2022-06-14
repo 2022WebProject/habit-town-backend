@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import Quest from "../model/Quest.js";
 
 export const create = async (quest) => {
@@ -11,4 +12,25 @@ export const findById = async (id) => {
 
 export const findAll = async () => {
   return Quest.find();
+};
+
+export const accept = async (userId, questId, quest) => {
+  return Quest.findByIdAndUpdate(questId, {
+    $push: {
+      accepted_users: {
+        _id: ObjectId(userId),
+        user_id: userId,
+      },
+    },
+  });
+};
+
+export const reject = async (userId, questId) => {
+  return Quest.findByIdAndUpdate(questId, {
+    $pull: {
+      accepted_users: {
+        _id: ObjectId(userId),
+      },
+    },
+  });
 };

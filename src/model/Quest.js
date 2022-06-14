@@ -10,6 +10,11 @@ const QuestSchema = mongoose.Schema({
       title: { type: String, required: true },
     },
   ],
+  accepted_users: [
+    {
+      user_id: { type: String },
+    },
+  ],
 });
 useVirtualId(QuestSchema);
 
