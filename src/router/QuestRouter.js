@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import * as questController from "../controller/questController.js";
-import { authChecker } from "../helper/authHelper.js";
+import { authChecker, authPasser } from "../helper/authHelper.js";
 import { expressValidateResponse } from "../helper/validator.js";
 
 const questValidate = [
@@ -17,7 +17,7 @@ const questValidate = [
 const questRouter = express.Router();
 
 questRouter.post("/", questValidate, authChecker, questController.create);
-questRouter.get("/", authChecker, questController.read);
+questRouter.get("/", authPasser, questController.read);
 questRouter.get("/:id", authChecker, questController.readDetail);
 questRouter.post("/accept", authChecker, questController.accept);
 
