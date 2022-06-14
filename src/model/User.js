@@ -12,6 +12,7 @@ const UserSchema = mongoose.Schema({
       quiest_id: { type: Number, required: true },
       success_count: { type: Number, required: true },
       memo: { type: String, required: false },
+      status: { type: Number, required: true },
     },
   ],
 });
