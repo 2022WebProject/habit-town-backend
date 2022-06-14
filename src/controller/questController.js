@@ -26,7 +26,14 @@ export const read = async (req, res, next) => {
 };
 
 // TODO 여기 퀘스트 상세 불러오기 부분
-export const readDetail = (req, res, next) => {};
+export const readDetail = async (req, res, next) => {
+  const { id } = req.params;
+  const quest = await questData.findById(id);
+  if (!quest) {
+    res.status(404).json({ message: "존재하지 않는 퀘스트입니다" });
+  }
+  res.status(200).json({ data: quest });
+};
 
 // 여기는 내꺼~
 export const accept = async (req, res, next) => {

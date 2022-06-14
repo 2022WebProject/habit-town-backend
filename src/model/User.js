@@ -7,6 +7,7 @@ const UserSchema = mongoose.Schema({
   nickname: { type: String, required: true },
   password: { type: String, required: true },
   introduce: String,
+  success_quest_count: { type: Number, default: 0 },
   accepted_quests: [
     {
       quiest_id: { type: Number, required: true },

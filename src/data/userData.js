@@ -6,7 +6,6 @@ export const findByNickname = async (nickname) => {
 };
 
 export const findByEmail = async (email) => {
-  console.log("앙");
   return User.findOne({ email });
 };
 
