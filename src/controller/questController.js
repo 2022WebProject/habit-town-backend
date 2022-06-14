@@ -17,8 +17,14 @@ export const create = async (req, res, next) => {
   }
   res.status(201).json({ message: "success" });
 };
+
+// TODO 여기 퀘스트 불러오기부분
 export const read = (req, res, next) => {
   res.json("아이고");
 };
+
+// TODO 여기 퀘스트 상세 불러오기 부분
 export const readDetail = (req, res, next) => {};
+
+// 여기는 내꺼~
 export const accept = (req, res, next) => {};
