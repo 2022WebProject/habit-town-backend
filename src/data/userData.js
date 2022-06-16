@@ -10,7 +10,7 @@ export const findByEmail = async (email) => {
 };
 
 export const findById = async (id) => {
-  return User.findById(id);
+  return User.findById(id, { password: 0 });
 };
 
 export const create = async (user) => {

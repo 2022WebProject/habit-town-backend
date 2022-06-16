@@ -43,6 +43,7 @@ export const signup = async (req, res, next) => {
 
   return res.status(201).json({ token, nickname, id: userId });
 };
+
 export const withdraw = (req, res, next) => {};
 
 export const me = async (req, res, next) => {
@@ -50,6 +51,7 @@ export const me = async (req, res, next) => {
   const user = await userRepository.findById(id);
   return res.status(200).json(user);
 };
+
 export const get = (req, res, next) => {};
 export const put = (req, res, next) => {};
 

@@ -16,7 +16,7 @@ export const authChecker = (req, res, next) => {
     if (err) {
       return res.status(401).json(AUTH_ERROR);
     }
-    console.log(decoded);
+    // console.log(decoded);
     const user = await userRepository.findById(decoded.id);
     if (!user) {
       return res.status(401).json(AUTH_ERROR);
@@ -36,7 +36,7 @@ export const authPasser = (req, res, next) => {
     if (err) {
       return res.status(401).json(AUTH_ERROR);
     }
-    console.log(decoded);
+    // console.log(decoded);
     const user = await userRepository.findById(decoded.id);
     if (!user) {
       return res.status(401).json(AUTH_ERROR);
