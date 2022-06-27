@@ -20,5 +20,6 @@ questRouter.post("/", questValidate, authChecker, questController.create);
 questRouter.get("/", authPasser, questController.read);
 questRouter.get("/:id", authChecker, questController.readDetail);
 questRouter.post("/accept", authChecker, questController.accept);
+questRouter.post("/clear", authChecker, questController.clear);
 
 export default questRouter;
