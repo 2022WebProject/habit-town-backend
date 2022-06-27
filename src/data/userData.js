@@ -12,6 +12,11 @@ const PROGRESS_INIT = [
   0, 0, 0, 0,
 ];
 
+const PROGRESS_INIT1 = [
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 0,
+];
+
 export const findByNickname = async (nickname) => {
   return User.findOne({ nickname });
 };
@@ -62,9 +67,19 @@ export const clear = async (user, questId) => {
   quest.is_cleared = true;
   quest.last_cleared_time = new Date();
   const changeIndex = quest.progress.findIndex((v) => v === 0);
+  console.log(changeIndex);
   if (changeIndex >= 0) {
     quest.progress[changeIndex] = 1;
   }
+  if (changeIndex == 29) {
+    quest.status = parseInt(quest.status) + 1;
+    if (quest.status == 4) {
+      console.log("모두 클리어!!");
+    } else {
+      quest.progress = PROGRESS_INIT;
+    }
+  }
 
+  console.log(quest);
   user.save();
 };
