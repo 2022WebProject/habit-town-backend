@@ -44,7 +44,7 @@ export const accept = async (userId, questId, quest) => {
         memo: "",
         status: 3,
         sub_quests: quest.sub_quests,
-        progress: PROGRESS_INIT1,
+        progress: PROGRESS_INIT,
         is_cleared: false,
         last_cleared_time: null,
         // last_cleared_time: new Date("2022-06-25 12:00:00"),
