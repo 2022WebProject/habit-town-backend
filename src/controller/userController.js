@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { config } from "../helper/envconfig.js";
 import * as userRepository from "../data/userData.js";
+import moment from "moment";
 
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -49,6 +50,23 @@ export const withdraw = (req, res, next) => {};
 export const me = async (req, res, next) => {
   const id = req.userId;
   const user = await userRepository.findById(id);
+  for (let i = 0; i < user.accepted_quests.length; i++) {
+    const quest = user.accepted_quests[i];
+    const lastClearedTimeDiff = moment().diff(
+      moment(quest.last_cleared_time),
+      "days"
+    );
+    if (lastClearedTimeDiff > 1) {
+      const changeIndex = quest.progress.findIndex((v) => v === 0);
+      if (changeIndex >= 0) {
+        for (let j = 0; j < lastClearedTimeDiff - 1; j++) {
+          quest.progress[changeIndex] = -1;
+        }
+      }
+    }
+    quest.last_cleared_time = new Date();
+    await user.save();
+  }
   return res.status(200).json(user);
 };
 

@@ -25,9 +25,6 @@ export const read = async (req, res, next) => {
   const retQuests = quests.filter(
     (item) => !item.accepted_users.find((user) => user.user_id == req.userId)
   );
-
-  // TODO 여기서 퀘스트 수락 마지막 날자를 비교해서 동기화 해야함.
-
   res.status(200).json({ data: retQuests });
 };
 
