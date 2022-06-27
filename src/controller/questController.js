@@ -23,7 +23,9 @@ export const create = async (req, res, next) => {
 export const read = async (req, res, next) => {
   const quests = await questData.findAll();
   const retQuests = quests.filter(
-    (item) => !item.accepted_users.find((user) => user.user_id == req.userId)
+    (item) =>
+      !item.accepted_users.find((user) => user.user_id == req.userId) &&
+      !item.cleared_users.find((user) => user._id == req.userId)
   );
   res.status(200).json({ data: retQuests });
 };
@@ -75,6 +77,15 @@ export const clear = async (req, res, next) => {
     await userData.clear(user, quest_id);
   }
   res.status(200).json({ message: "완료했습니다." });
+};
+
+export const readCleared = async (req, res, next) => {
+  const quests = await questData.findAll();
+  console.log(quests);
+  const retQuests = quests.filter((item) =>
+    item.cleared_users?.find((user) => user._id == req.userId)
+  );
+  res.status(200).json({ data: retQuests });
 };
 
 const isUserInQuest = (user, quest) => {
