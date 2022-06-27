@@ -37,6 +37,7 @@ export const signup = async (req, res, next) => {
     email,
     accepted_quests: [],
     introduce: "",
+    cleared_quests: [],
   });
 
   const token = createJwtToken(userId);

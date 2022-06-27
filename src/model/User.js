@@ -22,6 +22,7 @@ const UserSchema = mongoose.Schema({
       last_cleared_time: { type: Date },
     },
   ],
+  cleared_quests: [{ quest_id: { type: String }, quest: { type: Object } }],
 });
 useVirtualId(UserSchema);
 

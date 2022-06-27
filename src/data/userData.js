@@ -1,5 +1,7 @@
 import { ObjectId } from "mongodb";
+import Quest from "../model/Quest.js";
 import User from "../model/User.js";
+import * as QuestData from "./questData.js";
 
 const PROGRESS_STATUS = {
   NOT_STARTED: 0,
@@ -40,9 +42,9 @@ export const accept = async (userId, questId, quest) => {
         _id: ObjectId(questId),
         questId: questId,
         memo: "",
-        status: 1,
+        status: 3,
         sub_quests: quest.sub_quests,
-        progress: PROGRESS_INIT,
+        progress: PROGRESS_INIT1,
         is_cleared: false,
         last_cleared_time: null,
         // last_cleared_time: new Date("2022-06-25 12:00:00"),
@@ -75,6 +77,17 @@ export const clear = async (user, questId) => {
     quest.status = parseInt(quest.status) + 1;
     if (quest.status == 4) {
       console.log("모두 클리어!!");
+      const realQuest = await QuestData.findById(quest._id);
+      user.cleared_quests = [
+        ...user.cleared_quests,
+        { questId: questId, quest: realQuest },
+      ];
+      user.accepted_quests = user.accepted_quests.filter(
+        (v) => v._id != questId
+      );
+      // await reject(user._id, questId);
+      await QuestData.clear(user, questId);
+      await QuestData.reject(user._id, questId);
     } else {
       quest.progress = PROGRESS_INIT;
     }

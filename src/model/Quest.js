@@ -15,6 +15,7 @@ const QuestSchema = mongoose.Schema({
       user_id: { type: String },
     },
   ],
+  cleared_users: [{ user_id: { type: String }, user: { type: Object } }],
 });
 useVirtualId(QuestSchema);
 

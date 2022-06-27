@@ -34,3 +34,14 @@ export const reject = async (userId, questId) => {
     },
   });
 };
+
+export const clear = async (user, questId) => {
+  return Quest.findByIdAndUpdate(questId, {
+    $push: {
+      cleared_users: {
+        _id: ObjectId(user._id),
+        user: user,
+      },
+    },
+  });
+};
