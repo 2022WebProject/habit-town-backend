@@ -13,6 +13,9 @@ const QuestSchema = mongoose.Schema({
   accepted_users: [
     {
       user_id: { type: String },
+      accepted_time: { type: Date },
+      memo: { type: String, required: false },
+      user: { type: Object },
     },
   ],
   cleared_users: [{ user_id: { type: String }, user: { type: Object } }],

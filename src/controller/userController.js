@@ -53,19 +53,26 @@ export const me = async (req, res, next) => {
   const user = await userRepository.findById(id);
   for (let i = 0; i < user.accepted_quests.length; i++) {
     const quest = user.accepted_quests[i];
-    const lastClearedTimeDiff = moment().diff(
-      moment(quest.last_cleared_time),
-      "days"
-    );
+    const lastClearedTimeDiff = moment()
+      .startOf("day")
+      .diff(moment(quest.last_cleared_time).startOf("day"), "days");
+
+    console.log(lastClearedTimeDiff);
     if (lastClearedTimeDiff > 1) {
+      // 2일이상 안온경우 fail을 넣어준다.
       const changeIndex = quest.progress.findIndex((v) => v === 0);
       if (changeIndex >= 0) {
         for (let j = 0; j < lastClearedTimeDiff - 1; j++) {
           quest.progress[changeIndex] = -1;
         }
+        quest.last_cleared_time = new Date();
       }
+    } else if (lastClearedTimeDiff == 1) {
+      // 1일이 지난경우 다시 완료를 할 수 있도록 해준다.
+      quest.is_cleared = false;
+      console.log("dmdkdk");
     }
-    quest.last_cleared_time = new Date();
+
     await user.save();
   }
   return res.status(200).json(user);

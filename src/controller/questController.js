@@ -37,6 +37,10 @@ export const readDetail = async (req, res, next) => {
   if (!quest) {
     res.status(404).json({ message: "존재하지 않는 퀘스트입니다" });
   }
+  const retAcceptedUser = quest.accepted_users.filter(
+    (item) => item._id != req.userId
+  );
+  quest.accepted_users = retAcceptedUser;
   res.status(200).json({ data: quest });
 };
 
@@ -61,7 +65,7 @@ export const accept = async (req, res, next) => {
       .json({ message: "퀘스트는 3개까지 수락할 수 있습니다." });
   }
   await userData.accept(req.userId, quest_id, quest);
-  await questData.accept(req.userId, quest_id, quest);
+  await questData.accept(req.userId, quest_id, quest, user);
   res.status(200).json({ message: "수락하였습니다." });
 };
 
@@ -86,6 +90,18 @@ export const readCleared = async (req, res, next) => {
     item.cleared_users?.find((user) => user._id == req.userId)
   );
   res.status(200).json({ data: retQuests });
+};
+
+export const editMemo = async (req, res, next) => {
+  const { quest_id, memo } = req.body;
+  const quest = await questData.findById(quest_id);
+  const user = await userData.findById(req.userId);
+  if (!quest) {
+    return res.status(404).json({ message: "존재하지 않는 퀘스트입니다" });
+  }
+
+  await questData.editMemo(quest, user, req.userId, memo);
+  res.status(200).json({ message: "수정하였습니다." });
 };
 
 const isUserInQuest = (user, quest) => {

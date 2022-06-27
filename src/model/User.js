@@ -20,6 +20,7 @@ const UserSchema = mongoose.Schema({
       progress: { type: Array },
       is_cleared: { type: Boolean },
       last_cleared_time: { type: Date },
+      accepted_time: { type: Date },
     },
   ],
   cleared_quests: [{ quest_id: { type: String }, quest: { type: Object } }],

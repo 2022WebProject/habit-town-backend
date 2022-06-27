@@ -22,5 +22,6 @@ questRouter.get("/cleared", authChecker, questController.readCleared);
 questRouter.get("/:id", authChecker, questController.readDetail);
 questRouter.post("/accept", authChecker, questController.accept);
 questRouter.post("/clear", authChecker, questController.clear);
+questRouter.post("/memo", authChecker, questController.editMemo);
 
 export default questRouter;
